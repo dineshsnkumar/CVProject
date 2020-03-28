@@ -80,6 +80,17 @@ ToDo
 - The projected Points coordinates is it in x, y or y,x 
 - How does numpy store x, y coordinates
 
+-------
+
+--------------------------------------------------------------------
+
+Stitching Images 
+
+1. I am projecting corners of image2 onto image1 space using Inverse Hom.
+2. Calculate the size using boundingrec to get the size of the entire stitchedImage. I am getting same results 
+3. 
+
+ 
 
 
 

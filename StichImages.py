@@ -37,6 +37,10 @@ def stitch(img1, img2, H, inv_H):
     img2points3 = [[y3, x3]]
     img2points4 = [[y4, x4]]
 
+    # Find the minimum and maximum along y and x columns
+
+
+
     # cv2.rectangle(img1, (int(x1), int(y1)), (int(x3), int(y3)), (255,0,0), 10)
     # cv2.imshow('', img1)
     # cv2.waitKey()
@@ -48,13 +52,22 @@ def stitch(img1, img2, H, inv_H):
 
     # points2 = np.array([img2points1, img2points2, img2points3, img2points4], np.float32)
     # print('----Points2', img2points1, img2points2, img2points3, img2points4)
+
+
     points = np.array([img1points1, img1points2, img1points3, img1points4, img2points1, img2points2, img2points3, img2points4], np.float32)
-    # print('Points ', points)
+    min__points = np.amin(points, axis=0)
+    max_points = np.amax(points, axis=0)
+    print('Points', points, 'Min and Max along axis', min__points, max_points)
+    # h = int(max_points[0][0] - min__points[0][0])
+    # w = int(max_points[0][1] - min__points[0][1])
+
+    # print('height, width of stiched Image',h, w)
+    # # print('Points ', points)
     boundaryPoints = cv2.boundingRect(points)
-
-    # w = boundaryPoints[2] - boundaryPoints[0]
-    # h = boundaryPoints[3] - boundaryPoints[1]
-
+    #
+    # # w = boundaryPoints[2] - boundaryPoints[0]
+    # # h = boundaryPoints[3] - boundaryPoints[1]
+    #
     h = boundaryPoints[2] - boundaryPoints[0]
     w = boundaryPoints[3] - boundaryPoints[1]
     stichedImage = np.zeros([h, w, 3], np.uint8)
@@ -67,26 +80,41 @@ def stitch(img1, img2, H, inv_H):
     print('Stitched Image', stichedImage.shape)
 
     # Copy img1 to stitchedImage
-    stichedImage[0:img1.shape[0], 0:img1.shape[1]] = img1
+    # ? What is the right location ?
+    offsetY = stichedImage.shape[0] - img1.shape[0]
+    offsetX = stichedImage.shape[1] - img1.shape[1]
+    print('OffSet',offsetX, offsetY)
+
+    # Try changing this
+    # stichedImage[0:img1.shape[0], 0:img1.shape[1]] = img1
+    for i in range(0, img1.shape[0]):
+        for j in range(0, img1.shape[1]):
+            stichedImage[i - boundaryPoints[0], j - boundaryPoints[1]] = img1[i, j]
 
     # Project the stitchedImage in image2 space
     '''
     If the point lies in the image2 space 
     add/ blend pixel value to stitched Image 
+    ? i,j is y, x 
     '''
-    for i in range(stichedImage.shape[0]):
-        for j in range(stichedImage.shape[1]):
+    for i in range(boundaryPoints[0], stichedImage.shape[0]):
+        for j in range(boundaryPoints[1], stichedImage.shape[1]):
             x, y = project(i,j, H[0])
-            if x > 0 and y > 0:
-                if x < img2.shape[1] and y < img2.shape[0]:
+            # Remove
+            if 0 <= x < img2.shape[0] and 0 <= y < img2.shape[1]:
+                if (x - boundaryPoints[0] < img2.shape[1]) and (y - boundaryPoints[1] < img2.shape[0]):
                     x = round(x)
                     y = round(y)
                     pixelValue = cv2.getRectSubPix(img2, (1, 1), (x, y))
-                    print('rgb value', stichedImage[j,i])
-                    stichedImage[j, i] = pixelValue[0][0]
+                    print('j, i', j, i)
+                    stichedImage[j - boundaryPoints[0], i - boundaryPoints[1]] = pixelValue[0][0]
+                    print('Boundary Points', stichedImage[j - boundaryPoints[0], i - boundaryPoints[1]])
                     print('Pixel Value', pixelValue[0][0])
 
-                    # stichedImage[x,y,0] = pixelValue[0][0][0]
+    print('-------Exiting the Stitched Image -----------')
+    return stichedImage
+
+        # stichedImage[x,y,0] = pixelValue[0][0][0]
                     # stichedImage[x,y,1] = pixelValue[0][0][1]
                     # stichedImage[x,y,2 ] = pixelValue[0][0][2]
 
@@ -95,8 +123,6 @@ def stitch(img1, img2, H, inv_H):
                     # print('Projected points ', x, y, 'Pixel value', pixelValue)
 
 
-    print('-------Exiting the Stitched Image -----------')
-    return stichedImage
 
 def stitchMultipleImages(stichedImage, img, sift):
     print('----------Stitching Multiple Images together')

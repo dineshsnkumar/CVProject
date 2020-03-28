@@ -30,7 +30,7 @@ def harris_corner_feature_detector(img):
 
     # For each pixel calculate the corner strength
 
-    cornerStrength = np.zeros([gray_img.shape[0], gray_img.shape[1]], dtype=np.uint8)
+    cornerStrengthMatrix = np.zeros([gray_img.shape[0], gray_img.shape[1]], dtype=np.uint8)
 
     for x in range(gray_img.shape[0]):
         for y in range(gray_img.shape[1]):
@@ -46,20 +46,23 @@ def harris_corner_feature_detector(img):
 
             # corner = det - (0.04 * (trace**2))
 
-            cornerStrength[x, y] = corner
+            cornerStrengthMatrix[x, y] = corner
 
-    threshold = 0.6 * cornerStrength.max()
+    threshold = 200
 
-    corners = np.zeros([gray_img.shape[0], gray_img.shape[1]], dtype=np.uint8)
+    corners_normalize = np.empty(cornerStrengthMatrix.shape, dtype=np.uint8)
+    cv.normalize(cornerStrengthMatrix, corners_normalize, alpha=0, beta=255, norm_type=cv.NORM_MINMAX)
+    dst_norm_scaled = cv.convertScaleAbs(corners_normalize)
 
-    for x in range(cornerStrength.shape[0]):
-        for y in range(cornerStrength.shape[1]):
-            pixel = cornerStrength[x, y]
+
+    for x in range(cornerStrengthMatrix.shape[0]):
+        for y in range(cornerStrengthMatrix.shape[1]):
+            pixel = cornerStrengthMatrix[x, y]
             if pixel >= threshold:
-                corners[x, y] = cornerStrength[x, y]
-                cv.circle(img, (x, y), 6, (0, 255, 0), -1)
+                # corners_thresh[x, y] = cornerStrengthMatrix[x, y]
+                cv.circle(corners_normalize, (y, x), 6, (0, 255, 0), -1)
     kernel = np.ones((5, 5), np.uint8)
-    return corners, img
+    return corners_normalize, corners_normalize
 
 
 def ratio_test(matches):

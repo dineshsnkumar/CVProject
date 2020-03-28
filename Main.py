@@ -12,15 +12,15 @@ def main():
     img2 = cv2.imread('project_images/Rainier2.png')
 
     # # # Feature Detection
-    # img1 = cv2.imread('stiched3Image.png')
-    # img2 = cv2.imread('project_images/Rainier4.png')
+    # img1 = cv2.imread('125.png')
+    # img2 = cv2.imread('34.png')
 
     # Convert to gray scale
     gray_img1 = cv2.cvtColor(img1, cv2.COLOR_RGB2GRAY)
     gray_img2 = cv2.cvtColor(img2, cv2.COLOR_RGB2GRAY)
     box_img = cv2.imread('project_images/Boxes.png')
-    corners, corner_box_img = harris_corner_feature_detector(box_img)
-    cv2.imwrite('1a.png', corner_box_img)
+    # corners, corner_box_img = harris_corner_feature_detector(box_img)
+    # cv2.imwrite('1a.png', corner_box_img)
 
     # Feature Matching
     # Initiate SIFT detector
@@ -33,18 +33,22 @@ def main():
     matches = bfmatcher.match(des1, des2)
     matches = sorted(matches, key=lambda x: x.distance)
     img3 = cv2.drawMatches(img1, kp1, img2, kp2, matches[:10], None)
+    # cv2.imshow('', img3)
+    # cv2.waitKey()
     cv2.imwrite("2.png", img3)
 
     # Perform Ransac
-    hom, invHom, inLierMatchesList = ransac(matches, 4, 700, 20, img1, img2, kp1, kp2)
+    hom, invHom, inLierMatchesList = ransac(matches, 4, 700, 10, img1, img2, kp1, kp2)
     inlierImg = cv2.drawMatches(img1, kp1, img2, kp2, inLierMatchesList[:10], None)
-    cv2.imwrite("3.png", inlierImg)
+    # cv2.imwrite("3.png", inlierImg)
     # cv2.imshow('', inlierImg)
     # cv2.waitKey()
 
     # Merge the images
     stichedImage = stitch(img1, img2, hom, invHom)
     cv2.imwrite("4.png", stichedImage)
+    cv2.imshow('', stichedImage)
+    cv2.waitKey()
 
     # # Multiple Image Stitching
     '''
