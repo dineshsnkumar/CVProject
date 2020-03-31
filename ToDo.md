@@ -86,10 +86,31 @@ ToDo
 
 Stitching Images 
 
-1. I am projecting corners of image2 onto image1 space using Inverse Hom.
-2. Calculate the size using boundingrec to get the size of the entire stitchedImage. I am getting same results 
-3. 
+1. Copy image1 using the boundary conditions and changing w, h 
+2. See if you merge the two images 
+ 
 
+ 29/02/2020
+ ------------
+ 
+ - Check if y corordinates is less than img1.shape[0]- boundary[0]
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
 
 

@@ -11,9 +11,12 @@ def main():
     img1 = cv2.imread('project_images/Rainier1.png')
     img2 = cv2.imread('project_images/Rainier2.png')
 
+    # img1 = cv2.imread('project_images/MelakwaLake1.png')
+    # img2 = cv2.imread('project_images/Me lakwaLake2.png')
+
     # # # Feature Detection
-    # img1 = cv2.imread('125.png')
-    # img2 = cv2.imread('34.png')
+    # img1 = cv2.imread('project_images/Rainier6.png')
+    # img2 = cv2.imread('12345.png')
 
     # Convert to gray scale
     gray_img1 = cv2.cvtColor(img1, cv2.COLOR_RGB2GRAY)

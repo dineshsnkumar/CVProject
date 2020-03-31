@@ -85,7 +85,7 @@ def ransac(matches, numMatches, numIterations, inlierThreshold, img1, img2, kp1,
     inlierPtsB = np.float32([kp2[match.trainIdx].pt for match in inlierMatchesList])
 
     inliers_best_hom = cv2.findHomography(inlierPtsA, inlierPtsB, 0, 0)
-    inv_inliers_best_hom = np.linalg.inv(inliers_best_hom[0])
+    inv_inliers_best_hom = np.linalg.pinv(inliers_best_hom[0])
 
     print('inlierPtsA', inlierPtsA,'\n inlierPtsB ', inlierPtsB,'\n-----Best Homography using inliers', inliers_best_hom[0])
     print('\n Inverse Hom', inv_inliers_best_hom)
