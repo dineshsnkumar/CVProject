@@ -78,10 +78,11 @@ def stitch(img1, img2, H, inv_H):
             print('x2, y2 is ', x2, y2)
             if (x2 >= 0 and y2 >= 0) and (x2 < img2.shape[1] and y2 < img2.shape[0]):
                 pixelValueImg2 = cv2.getRectSubPix(img2, (1, 1), (x2, y2))
-                stichedImage[y1 - boundaryPoints[0], x1 - boundaryPoints[1]] = pixelValueImg2[0][0]
-                # if y1 < img1.shape[0] :
-                print('y1 is ', y1, 'Condition is ', img1.shape[0] - boundaryPoints[0])
-                print('y1-boundary[0] ', y1 - boundaryPoints[0])
+                if (y1-boundaryPoints[0] < stichedImage.shape[0]) and (x1 - boundaryPoints[1]< stichedImage.shape[1]):
+                    stichedImage[y1 - boundaryPoints[0], x1 - boundaryPoints[1]] = pixelValueImg2[0][0]
+                    # if y1 < img1.shape[0] :
+                    print('y1 is ', y1, 'Condition is ', img1.shape[0] - boundaryPoints[0])
+                    print('y1-boundary[0] ', y1 - boundaryPoints[0])
                     # stichedImage[y1 - boundaryPoints[0], x1 - boundaryPoints[1]] = pixelValueImg2[0][0]
 
     # for y1 in range(boundaryPoints[0], stichedImage.shape[0]):

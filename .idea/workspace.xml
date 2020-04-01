@@ -2,13 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="261250c2-718a-4e5a-801a-ab30454d0886" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/FeatureDescriptor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myoutput/4.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.png" beforeDir="false" afterPath="$PROJECT_DIR$/2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4.png" beforeDir="false" afterPath="$PROJECT_DIR$/4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/12345.png" beforeDir="false" afterPath="$PROJECT_DIR$/myoutput/12345.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1a.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/34.png" beforeDir="false" afterPath="$PROJECT_DIR$/myoutput/34.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/345.png" beforeDir="false" afterPath="$PROJECT_DIR$/myoutput/345.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FeatureDetectorandExtraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/FeatureDetectorandExtraction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RANSAC.py" beforeDir="false" afterPath="$PROJECT_DIR$/RANSAC.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StichImages.py" beforeDir="false" afterPath="$PROJECT_DIR$/StichImages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToDo.md" beforeDir="false" afterPath="$PROJECT_DIR$/ToDo.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -196,18 +202,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/StichImages.py</url>
-          <line>23</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/StichImages.py</url>
-          <line>39</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/StichImages.py</url>
-          <line>48</line>
-          <option name="timeStamp" value="8" />
+          <line>101</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

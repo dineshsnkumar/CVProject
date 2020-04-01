@@ -3,8 +3,6 @@ import numpy as np
 
 
 def harris_corner_feature_detector(img):
-    print('-----Feature Detector------')
-    # img = cv.imread('image_sets/graf/img1.ppm')
     gray_img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
     # Compute Gradients
@@ -13,6 +11,7 @@ def harris_corner_feature_detector(img):
 
     # Ix = cv.Sobel(gray_img,cv.CV_64F, 1,0 , ksize= 5)
     # IY = cv.Sobel(gray_img,cv.CV_64F, 0,1 , ksize= 5)
+
 
     Ix = cv.filter2D(gray_img, -1, kernelX)
     Iy = cv.filter2D(gray_img, -1, kernelY)
@@ -30,7 +29,7 @@ def harris_corner_feature_detector(img):
 
     # For each pixel calculate the corner strength
 
-    cornerStrengthMatrix = np.zeros([gray_img.shape[0], gray_img.shape[1]], dtype=np.uint8)
+    cornerStrength = np.zeros([gray_img.shape[0], gray_img.shape[1]], dtype=np.uint8)
 
     for x in range(gray_img.shape[0]):
         for y in range(gray_img.shape[1]):
@@ -46,24 +45,21 @@ def harris_corner_feature_detector(img):
 
             # corner = det - (0.04 * (trace**2))
 
-            cornerStrengthMatrix[x, y] = corner
+            cornerStrength[x, y] = corner
 
-    threshold = 200
+    threshold = 0.6 * cornerStrength.max()
 
-    corners_normalize = np.empty(cornerStrengthMatrix.shape, dtype=np.uint8)
-    cv.normalize(cornerStrengthMatrix, corners_normalize, alpha=0, beta=255, norm_type=cv.NORM_MINMAX)
-    dst_norm_scaled = cv.convertScaleAbs(corners_normalize)
+    corners = np.zeros([gray_img.shape[0], gray_img.shape[1]], dtype=np.uint8)
 
-
-    for x in range(cornerStrengthMatrix.shape[0]):
-        for y in range(cornerStrengthMatrix.shape[1]):
-            pixel = cornerStrengthMatrix[x, y]
+    for x in range(cornerStrength.shape[0]):
+        for y in range(cornerStrength.shape[1]):
+            pixel = cornerStrength[x, y]
             if pixel >= threshold:
-                # corners_thresh[x, y] = cornerStrengthMatrix[x, y]
-                cv.circle(corners_normalize, (y, x), 6, (0, 255, 0), -1)
-    kernel = np.ones((5, 5), np.uint8)
-    return corners_normalize, corners_normalize
+                corners[x, y] = cornerStrength[x, y]
+                cv.circle(img, (x, y), 6, (0, 255, 0), -1)
 
+    kernel = np.ones((5, 5), np.uint8)
+    return corners, img
 
 def ratio_test(matches):
     good_matches = []
