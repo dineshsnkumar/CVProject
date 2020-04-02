@@ -23,21 +23,22 @@ def stitch(img1, img2, H, inv_H):
     img1points3 = [[0, h1]]
     img1points4 = [[w1, h1]]
 
+
     # points1 = np.array([img1points1, img1points2, img1points3, img1points4], np.float32)
 
     # print('Points1 Image', points1)
 
     # Four points of Image2
     h2, w2, d2 = img2.shape
-    x1, y1 = project(0, 0, inv_H)
-    x2, y2 = project(w2, 0, inv_H)
-    x3, y3 = project(0, h2, inv_H)
-    x4, y4 = project(w2, h2, inv_H)
+    x, y = project(0, 0, inv_H)
+    x1, y1 = project(w2, 0, inv_H)
+    x2, y2 = project(0, h2, inv_H)
+    x3, y3 = project(w2, h2, inv_H)
 
-    img2points1 = [[y1, x1]]
-    img2points2 = [[y2, x2]]
-    img2points3 = [[y3, x3]]
-    img2points4 = [[y4, x4]]
+    img2points1 = [[x, y]]
+    img2points2 = [[x1, y1]]
+    img2points3 = [[x2, y2]]
+    img2points4 = [[x3, y3]]
 
     points = np.array(
         [img1points1, img1points2, img1points3, img1points4, img2points1, img2points2, img2points3, img2points4],
@@ -47,9 +48,12 @@ def stitch(img1, img2, H, inv_H):
     print('Points', points, 'Min and Max along axis', min__points, max_points)
 
     boundaryPoints = cv2.boundingRect(points)
-    h = boundaryPoints[2] - boundaryPoints[0]
-    w = boundaryPoints[3] - boundaryPoints[1]
+    w = boundaryPoints[2] - boundaryPoints[0]
+    h = boundaryPoints[3] - boundaryPoints[1]
     stichedImage = np.zeros([h, w, 3], np.uint8)
+
+    # cv2.imshow('Stitched Window', stichedImage)
+    # cv2.waitKey()
 
     print('Image 1 dimensions', img1.shape, 'Image2 dimensions', img2.shape)
     print('Image 1 boundary points', img1points1, img1points2, img1points3, img1points4)
@@ -60,9 +64,10 @@ def stitch(img1, img2, H, inv_H):
 
     # Copy Image 1 to stichedImage
     # stichedImage[0:img1.shape[0], 0:img1.shape[1]] = img1
-    for y1 in range(0, img1.shape[0]):
-        for x1 in range(0, img1.shape[1]):
-            stichedImage[y1 - boundaryPoints[0], x1 - boundaryPoints[1]] = img1[y1, x1]
+    for y in range(0, img1.shape[0]):
+        for x in range(0, img1.shape[1]):
+            stichedImage[y - boundaryPoints[1], x - boundaryPoints[0]] = img1[y,x]
+
 
 
     # Project the stitchedImage in image2 space
@@ -71,19 +76,33 @@ def stitch(img1, img2, H, inv_H):
     2. IF the point lies within image2 boundaries add pixel to stitchedImage 
     '''
 
-    for y1 in range(boundaryPoints[0], stichedImage.shape[0]):
-        for x1 in range(boundaryPoints[1], stichedImage.shape[1]):
-            # The projected points are x, y
-            x2, y2 = project(x1, y1, H[0])
-            print('x2, y2 is ', x2, y2)
-            if (x2 >= 0 and y2 >= 0) and (x2 < img2.shape[1] and y2 < img2.shape[0]):
-                pixelValueImg2 = cv2.getRectSubPix(img2, (1, 1), (x2, y2))
-                if (y1-boundaryPoints[0] < stichedImage.shape[0]) and (x1 - boundaryPoints[1]< stichedImage.shape[1]):
-                    stichedImage[y1 - boundaryPoints[0], x1 - boundaryPoints[1]] = pixelValueImg2[0][0]
-                    # if y1 < img1.shape[0] :
-                    print('y1 is ', y1, 'Condition is ', img1.shape[0] - boundaryPoints[0])
-                    print('y1-boundary[0] ', y1 - boundaryPoints[0])
-                    # stichedImage[y1 - boundaryPoints[0], x1 - boundaryPoints[1]] = pixelValueImg2[0][0]
+    for y in range(boundaryPoints[1], stichedImage.shape[0]):
+        for x in range(boundaryPoints[0], stichedImage.shape[1]):
+            x1, y1 = project(x,y, H[0])
+            # print('Projected Points', x1, y1)
+            if(0 <= x1 < img2.shape[1]) and (0 <= y1 < img2.shape[0]):
+                pixelValueImg2 = cv2.getRectSubPix(img2,(1,1), (x1,y1))
+                print('Pixel value at ', x1, y1 , pixelValueImg2)
+                print('Img2 value is ', img2[int(y1), int(x1)])
+                stichedImage[y-boundaryPoints[1], x-boundaryPoints[0]]= pixelValueImg2[0][0]
+                # stichedImage[]= img2[x1, y1]
+
+
+
+
+    # for x in range(boundaryPoints[0], stichedImage.shape[0]):
+    #     for y in range(boundaryPoints[1], stichedImage.shape[1]):
+    #         # The projected points are x, y
+    #         y1, x1 = project(y, x, H[0])
+    #         print('x2, y2 is ', y1, x1)
+    #         if (y1 >= 0 and x1 >= 0) and (y1 < img2.shape[1] and x1 < img2.shape[0]):
+    #             pixelValueImg2 = cv2.getRectSubPix(img2, (1, 1), (y1, x1))
+    #             if (x-boundaryPoints[0] < stichedImage.shape[0]) and (y - boundaryPoints[1]< stichedImage.shape[1]):
+    #                 stichedImage[x - boundaryPoints[0], y - boundaryPoints[1]] = pixelValueImg2[0][0]
+    #                 # if y1 < img1.shape[0] :
+    #                 print('y1 is ', x, 'Condition is ', img1.shape[0] - boundaryPoints[0])
+    #                 print('y1-boundary[0] ', x - boundaryPoints[0])
+    #                 # stichedImage[y1 - boundaryPoints[0], x1 - boundaryPoints[1]] = pixelValueImg2[0][0]
 
     # for y1 in range(boundaryPoints[0], stichedImage.shape[0]):
     #     for x1 in range(boundaryPoints[1], stichedImage.shape[1]):

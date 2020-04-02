@@ -29,13 +29,19 @@ def main():
     # cv2.imwrite('./output/1c.png', corner_box_img2)
 
     # Part 1 FEATURE DETECTION AND MATCHING
-    img1 = cv2.imread('./myoutput/4.png')
-    img2 = cv2.imread('project_images/Rainier3.png')
+    img1 = cv2.imread('./myoutput/46.png')
+    # img2 = cv2.imread('project_images/Rainier3.png')
+    img2 = cv2.imread('./myoutput/345.png')
 
+
+    # cv2.circle(img1,(517,0),6, (0, 255, 0), -1 )
+    # cv2.circle(img1, (517, 388), 6, (0, 255, 0), -1)
+    # cv2.imshow('img', img1)
+    # cv2.waitKey()
 
     # Convert to gray scale
-    gray_img1 = cv2.cvtColor(img1, cv2.COLOR_RGB2GRAY)
-    gray_img2 = cv2.cvtColor(img2, cv2.COLOR_RGB2GRAY)
+    gray_img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+    gray_img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
     # Part 3 PANORAMA MOSAIC STITCHING
     # Initiate SIFT detector
@@ -52,13 +58,14 @@ def main():
     # cv2.waitKey()
 
     # Perform Ransac
-    hom, invHom, inLierMatchesList = ransac(matches, 4, 400, 10, img1, img2, kp1, kp2)
+    hom, invHom, inLierMatchesList = ransac(matches, 4, 800, 10, img1, img2, kp1, kp2)
     inlierImg = cv2.drawMatches(img1, kp1, img2, kp2, inLierMatchesList[:10], None)
-
+    # cv2.imshow('', inlierImg)
+    # cv2.waitKey()
 
     # Merge the images
     stichedImage = stitch(img1, img2, hom, invHom)
-    cv2.imwrite("./output/123.png", stichedImage)
+    cv2.imwrite("./myoutput/123456_2.png", stichedImage)
 
 
     # # Multiple Image Stitching
