@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="261250c2-718a-4e5a-801a-ab30454d0886" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StichImages.py" beforeDir="false" afterPath="$PROJECT_DIR$/StichImages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myoutput/12345.png" beforeDir="false" afterPath="$PROJECT_DIR$/myoutput/12345.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myoutput/34.png" beforeDir="false" afterPath="$PROJECT_DIR$/myoutput/34.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myoutput/345.png" beforeDir="false" afterPath="$PROJECT_DIR$/myoutput/345.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myoutput/4.png" beforeDir="false" afterPath="$PROJECT_DIR$/myoutput/4.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -199,7 +194,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/StichImages.py</url>
-          <line>37</line>
+          <line>35</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>

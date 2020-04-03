@@ -10,7 +10,6 @@ Stitch the images using computed Homography
 @:return StitchedImage
 '''
 
-
 def stitch(img1, img2, H, inv_H):
     print('----Stitching Images ------- ')
     # Find StitchedImage size
@@ -22,7 +21,6 @@ def stitch(img1, img2, H, inv_H):
     img1points2 = [[w1, 0]]
     img1points3 = [[0, h1]]
     img1points4 = [[w1, h1]]
-
 
     # points1 = np.array([img1points1, img1points2, img1points3, img1points4], np.float32)
 
@@ -84,11 +82,8 @@ def stitch(img1, img2, H, inv_H):
                 pixelValueImg2 = cv2.getRectSubPix(img2,(1,1), (x1,y1))
                 print('Pixel value at ', x1, y1 , pixelValueImg2)
                 print('Img2 value is ', img2[int(y1), int(x1)])
-                stichedImage[y-boundaryPoints[1], x-boundaryPoints[0]]= pixelValueImg2[0][0]
-                # stichedImage[]= img2[x1, y1]
-
-
-
+                if (y-boundaryPoints[1] < stichedImage.shape[0]) and (x-boundaryPoints[0]< stichedImage.shape[1]):
+                    stichedImage[y - boundaryPoints[1], x - boundaryPoints[0]] = pixelValueImg2[0][0]
 
     # for x in range(boundaryPoints[0], stichedImage.shape[0]):
     #     for y in range(boundaryPoints[1], stichedImage.shape[1]):
