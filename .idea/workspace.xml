@@ -2,8 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="261250c2-718a-4e5a-801a-ab30454d0886" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/SIFTDescrptor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/StichImages.py" beforeDir="false" afterPath="$PROJECT_DIR$/StichImages.py" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/FeatureDetectorandExtraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/FeatureDetectorandExtraction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RANSAC.py" beforeDir="false" afterPath="$PROJECT_DIR$/RANSAC.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StichImages.py" beforeDir="false" afterPath="$PROJECT_DIR$/StichImages.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestCVProject.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myoutput/123456.png" beforeDir="false" afterPath="$PROJECT_DIR$/myoutput/123456.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/123.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/1234.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/4.png" beforeDir="false" afterPath="$PROJECT_DIR$/output/4.png" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

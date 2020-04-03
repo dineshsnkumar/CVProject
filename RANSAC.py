@@ -14,10 +14,6 @@ def project(x1, y1, H):
     vector = np.array([x1, y1,1], dtype=np.float64)
     proj_trans = np.dot(H, vector)
     proj_coordinates = np.divide(proj_trans, proj_trans[2])
-    # print(' Projected Coordinates ', proj_coordinates)
-    # # print(proj_trans, 'third value is', proj_trans[2])
-    # out_pts = cv2.perspectiveTransform(a_pers, H)
-    # print('Output from perspective transform', out_pts)
     return proj_coordinates[0], proj_coordinates[1]
 
 '''
@@ -41,7 +37,7 @@ def computeInlierCount(H, matches, numMatches,inlierThreshold, kp1, kp2):
         if distance <= inlierThreshold:
             inLierMatchesList.append(match)
             totalNoOfInliers = totalNoOfInliers+1
-    print('total no of inLiers ', totalNoOfInliers)
+    # print('total no of inLiers ', totalNoOfInliers)
     return totalNoOfInliers, inLierMatchesList
 
 '''
@@ -53,12 +49,6 @@ def ransac(matches, numMatches, numIterations, inlierThreshold, img1, img2, kp1,
     print('-----------RANSAC-------------')
     bestInlier = 0
     bestHomography = 0
-
-    # Test Ransac points
-    ptsA = np.float32([kp1[match.queryIdx].pt for match in matches])
-    ptsB = np.float32([kp2[match.trainIdx].pt for match in matches])
-    hom, mask = cv2.findHomography(ptsA, ptsB, cv2.RANSAC, inlierThreshold)
-    print('Homography from RANSAC', hom)
 
     for i in range(0, numIterations):
         fourMatches = random.sample(matches, numMatches)
