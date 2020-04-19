@@ -9,29 +9,15 @@ from SIFTDescrptor import *
 
 def main():
 
-    # Part 1 -----------FEATURE DETECTION ------------------------------------
     img1 = cv2.imread('project_images/Rainier1.png')
     img2 = cv2.imread('project_images/Rainier2.png')
     iterations = 1000
-
-    img7 = img1.copy()
-    img8 = img2.copy()
 
     # Convert to gray scale
     gray_img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
     gray_img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
-    box_img = cv2.imread('project_images/Boxes.png')
-
-    corners, corner_box_img = harris_corner_feature_detector(box_img)
-    corners1, corner_box_img1 = harris_corner_feature_detector(img7)
-    corners2, corner_box_img2 = harris_corner_feature_detector(img8)
-
-    cv2.imwrite('./output/1a.png', corner_box_img)
-    cv2.imwrite('./output/1b.png', corner_box_img1)
-    cv2.imwrite('./output/1c.png', corner_box_img2)
-
-    #  Part 3 ------------PANORAMA MOSAIC STITCHING - Two Images-----------------------
+    #  ------------PANORAMA MOSAIC STITCHING - Two Images-----------------------
     print('---Panorama Stitching started -----')
     sift = cv2.xfeatures2d.SIFT_create()
     matches, kp1, kp2 = siftMatches(sift, gray_img1, gray_img2)
