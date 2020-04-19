@@ -64,7 +64,6 @@ def stitch(img1, img2, H, inv_H):
             stichedImage[y - boundaryPoints[1], x - boundaryPoints[0]] = img1[y,x]
 
 
-
     # Project the stitchedImage in image2 space
     '''
     1. Project each pixel in Stitched Image to image2 
@@ -84,23 +83,3 @@ def stitch(img1, img2, H, inv_H):
     print('-------Exiting the Stitched Image -----------')
     return stichedImage
 
-
-def stitchMultipleImages(stichedImage, img, sift):
-    print('----------Stitching Multiple Images together')
-
-    stichedImage_gray = cv2.cvtColor(stichedImage, cv2.COLOR_BGR2GRAY)
-    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-    kp1, des1 = sift.detectAndCompute(stichedImage_gray, None)
-    kp2, des2 = sift.detectAndCompute(gray_img, None)
-
-    # Match KeyPoints in both the images
-    bfmatcher = cv2.BFMatcher()
-    matches = bfmatcher.match(des1, des2)
-    matches = sorted(matches, key=lambda x: x.distance)
-
-    hom, invHom, inLierMatchesList = ransac(matches, 4, 400, 10, stichedImage, img, kp1, kp2)
-    stichedImage2 = stitch(stichedImage, img, hom, invHom)
-    cv2.imshow('', stichedImage2)
-    cv2.waitKey()
-    return stichedImage2
